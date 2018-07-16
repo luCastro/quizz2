@@ -1,0 +1,24 @@
+
+<div class="row test">
+        
+        <div class="col-md-2"></div>
+            <div class="col-md-8 card">
+                <h2 class="mt-5"><%= @idea.title %></h2>
+                <p><%= @idea.description %></p>
+                <div>
+                    <small>
+                    Posted <%= time_ago_in_words(@idea.created_at) %> ago
+                    </small>
+                    
+                    <small>
+                    Last edited <%= time_ago_in_words(@idea.updated_at) %> ago  
+                    </small>
+                    <div class="mt-3">
+                        
+
+                    <%# parte dos botoes de edit e delete %>
+
+
+
+                    </div>
+                </div>
