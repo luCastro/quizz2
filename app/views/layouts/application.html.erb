@@ -1,15 +1,45 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Quizz2</title>
+    <title>Idea Factory</title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
-    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <%= stylesheet_link_tag 'application', media: 'all' %>
+    <%= javascript_include_tag 'application' %>
   </head>
 
   <body>
+    <nav class="navbar fixed-top navbar-reverse navbar-expand-sm navbar-dark bg-dark mb-8">
+      <a class="navbar-brand text-info" href="/">Idea Factory</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
+       aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse topnav justify-content-end" id="navbarNavAltMarkup">
+        <div class="">
+          <ul class="nav navbar-nav navbar-right">
+              <li class="nav-item"><a class=" nav-link text-info"<%= link_to 'Home', ideas_path%></a></li>
+              <%if use_signed_in?%> 
+                <li class="nav-item"><a class=" nav-link text-info"<%= link_to 'New Idea', new_idea_path %></a></li>
+              <% end %>
+              <% if current_use.present? %>
+                <span>Hi, <%= current_use.first_name %></span>
+                <li class="nav-item"><a class=" nav-link text-info"<%= link_to('Sign Out', session_path, 
+                method: :delete)%></a></li>
+              <%else%> 
+                <li class="nav-item"><a class=" nav-link text-info"<%= link_to('Sign In', new_session_path)%></a></li> 
+                <li class="nav-item"><a class=" nav-link text-info"<%= link_to('Sign Up', new_use_path)%></a></li>
+              <%end%>
+          </ul> 
+        </div>    
+      </div>
+    </nav>
+     
+    <div class = container>
+    
     <%= yield %>
+    
+    </div>
   </body>
 </html>
