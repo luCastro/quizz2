@@ -1,5 +1,7 @@
 class IdeasController < ApplicationController
+    before_action :authenticate_use!, only: [:new, :create, :edit, :update, :destroy]
     before_action :find_idea, only: [:show, :edit, :update, :destroy]
+    before_action :authorize_use!, only: [:edit, :update, :destroy]
 
     def new
         @idea = Idea.new
@@ -7,6 +9,8 @@ class IdeasController < ApplicationController
 
     def create
         @idea = Idea.new ideas_params
+        @idea.use = current_use
+
         if @idea.save
             redirect_to idea_path(@idea.id)
         else
@@ -47,6 +51,13 @@ class IdeasController < ApplicationController
 
     def find_idea
         @idea = Idea.find params[:id]
+    end
+
+    def authorize_use!
+        unless can?(:crud, @idea)
+          flash[:danger] = "Access Denied"
+          redirect_to idea_path(@idea)
+        end
     end
 
 end

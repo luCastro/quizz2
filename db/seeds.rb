@@ -7,21 +7,50 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 # rails g model post title:string body:text
 # rails g controller posts
+PASSWORD = "supersecret"
 
-Idea.delete_all
 Review.delete_all
+Idea.delete_all
+Use.delete_all
+
+super_use = Use.create(
+  first_name: "Jon",
+  last_name: "Snow",
+  email: "js@winterfell.gov",
+  password: PASSWORD,
+  # admin: true
+)
+
+10.times do
+  first_name = Faker::Name.first_name
+  last_name = Faker::Name.last_name
+
+  Use.create(
+    first_name: first_name,
+    last_name: last_name,
+    email: "#{first_name.downcase}.#{last_name.downcase}@example.com",
+    password: PASSWORD
+  )
+end
+
+use = Use.all
+
+puts Cowsay.say "Created #{use.count} uses", :tux
+
 
 25.times do
     i = Idea.create(
       title: Faker::Hacker.say_something_smart,
-      description: Faker::HarryPotter.quote
+      description: Faker::HarryPotter.quote,
+      use: Use.all.sample
     )
 
     if i.valid?
       rand(0..10).times do
         Review.create(
           body: Faker::Matz.quote,
-          idea: i
+          idea: i,
+          use: Use.all.sample
         )
     end
   end
@@ -32,18 +61,11 @@ review = Review.all
 
 puts Cowsay.say("Created #{idea.count} ideas and created #{review.count} reviews", :ghostbusters)
 
-# ==> criar User model:
-# 		* rails g model user first_name last_name email password_digest
-# 		-> incluir index para email na migration criada	
-# 		* rails db:migrate
-# 		-> incluir validações e method has_secure_password
-# 		-> incluir Gem ‘bcrypt’ and run bundle
 
-# 	-> Incluir User FK nas duas tabelas j’a existentes (Post e Comment):
-# 		- criar as migrations:
-# 			* rails g migration add_user_to_posts user:references 
-# 			* rails g migration add_user_to_comments user:references 
-# 			* rails db:migrate
+
+
+
+
 
 
 

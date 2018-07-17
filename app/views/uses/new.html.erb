@@ -1,0 +1,42 @@
+
+<div class="row">
+    <div class="col-md-12 test form-control">
+
+        <h1>Sign Up</h1>
+
+        <%= form_for @use do |u| %>
+            <% if @use.errors.any? %>
+                <p>
+                <%= @use.errors.full_messages.join(', ') %>
+                </p>
+            <% end %>
+            <div class="form-group">
+                <div>
+                    <%= u.label :first_name %>
+                    <%= u.text_field :first_name, class:"form-control"%>
+                </div>
+
+                <div>
+                    <%= u.label :last_name %>
+                    <%= u.text_field :last_name, class:"form-control"%>
+                </div>
+
+                <div>
+                    <%= u.label :email %>
+                    <%= u.email_field :email, class:"form-control"%>
+                </div>
+
+                <div>
+                    <%= u.label :password %>
+                    <%= u.password_field :password, class:"form-control"%>
+                </div>
+
+                <div>
+                    <%= u.label :password_confirmation %>
+                    <%= u.password_field :password_confirmation, class:"form-control"%>
+                </div>
+            </div>
+            <%= u.submit "Sign Up", class:"btn btn-primary"%>
+        <% end %>
+    </div>
+</div>

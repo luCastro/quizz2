@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_07_16_193337) do
+ActiveRecord::Schema.define(version: 2018_07_16_211533) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -20,6 +20,8 @@ ActiveRecord::Schema.define(version: 2018_07_16_193337) do
     t.text "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "use_id"
+    t.index ["use_id"], name: "index_ideas_on_use_id"
   end
 
   create_table "reviews", force: :cascade do |t|
@@ -27,8 +29,22 @@ ActiveRecord::Schema.define(version: 2018_07_16_193337) do
     t.bigint "idea_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "use_id"
     t.index ["idea_id"], name: "index_reviews_on_idea_id"
+    t.index ["use_id"], name: "index_reviews_on_use_id"
   end
 
+  create_table "uses", force: :cascade do |t|
+    t.string "first_name"
+    t.string "last_name"
+    t.string "email"
+    t.string "password_digest"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["email"], name: "index_uses_on_email", unique: true
+  end
+
+  add_foreign_key "ideas", "uses"
   add_foreign_key "reviews", "ideas"
+  add_foreign_key "reviews", "uses"
 end
